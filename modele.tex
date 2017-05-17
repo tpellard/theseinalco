@@ -1,0 +1,128 @@
+\documentclass[a4paper,11pt]{book}
+\usepackage{theseinalco}
+\usepackage{setspace}
+\doublespacing
+% \onehalfspacing
+\usepackage{csquotes}
+\usepackage{booktabs}
+
+\usepackage{polyglossia}
+\setmainlanguage{french}\frenchspacing
+\setmainfont[Mapping=tex-text,Ligatures=Common,Numbers=OldStyle,SmallCapsFeatures={WordSpace=2,LetterSpace=8}]{Linux Libertine O}
+\usepackage{microtype}
+
+\title{La connaissance des savoirs dans les mondes antiques et modernes}
+\subtitle{Regards croisés sur les centres et les périphéries}
+\author{Victoire Thésard}
+\preauthor{présentée par}
+\logo{\includegraphics[scale=.8]{inalco-logo-color}\hfill\includegraphics[scale=.8]{inalco-logo-color}}
+\universite{institut national des langues et civilisations orientales}
+\ecoledoctorale{École doctorale n\textsuperscript{o}265:\quad \textit{Langues, Littératures et Sociétés du monde}}
+\unite{Langues et civilisations (\textsc{umr} 0000)}
+\diplome{Thèse}
+
+% En cas de co-tutelle
+\diplome{Thèse en cotutelle}
+\couniversite{Université orientale des savoirs}
+\coecoledoctorale{École doctorale n\textsuperscript{o}xxx5:\quad \textit{Mondes et cultures}}
+\counite{Savoirs du monde}
+
+\date{soutenance prévue le 31 décembre 20xx}%Soutenue publiquement le
+\discipline{discipline: Langues et civilisations}
+\grade{pour obtenir le grade de docteur de l'\textsc{inalco}}
+\direction{Thèse dirigée par:}
+\directeur{M.}{André}{Nonyme}{Professeur, Université de la Science}
+\rapporteur{M\textsuperscript{me}}{Marie-Pierre}{Machinchose}{Directrice de recherches, Centre de recherches sur le Savoir}
+\rapporteur{M.}{Pierre}{Pauljacques}{Professeur, Université de la Science}
+
+\jury{M\textsuperscript{me}}{Marie-Pierre}{Machinchose}{Directrice de recherches, Centre de recherches sur le Savoir}
+\jury{M.}{Pierre}{Pauljacques}{Professeur, Université de la Science}
+\jury{M.}{Paul}{Pierrejacques}{Chargé de recherches, Centre de recherches sur le Savoir}
+\jury{M\textsuperscript{me}}{Jacqueline}{Pierrepaul}{Directrice d'études, École des hautes études sur le Monde et Institut international des connaissances}
+
+\usepackage{kantlipsum}
+
+\begin{document}
+\maketitle
+
+\frontmatter
+\chapter{Remerciements}
+\kant[1]
+\mainmatter
+\part{Ma partie}
+\chapter{Mon chapitre}
+
+\section{Section}
+Ceci est un \enquote{test}.\footnote{\kant[1]}
+\kant[1-2]
+\begin{itemize}
+ \item liste
+ \item liste
+\end{itemize}
+
+\begin{figure}
+ \centering
+ \fbox{Test}
+ \caption{Ceci est une figure}
+\end{figure}
+
+\begin{table}[htb]
+\centering
+\caption{Un joli tableau}\label{tab:joli}
+\begin{tabular}{ccc}\toprule
+A & B & C\\\midrule
+élément & case & texte\\
+case & élément & texte \\
+texte & case & élément \\
+\bottomrule\end{tabular}
+\end{table}
+
+\part{Mon autre partie}
+
+\chapter{Mon titre de chapitre est long voire extrêmement long}
+\section{Section}
+\subsection{Sous-section}
+\subsubsection{Sous-sous-section}
+\kant
+% \clearpage
+\begin{quote}
+\kant[1]
+\end{quote}
+
+\kant[1]
+
+\newenvironment{macitation}{\begin{quote}\singlespacing\small}{\end{quote}}
+
+\begin{macitation}
+\kant[1] texte texte\footnote{Note}
+\end{macitation}
+
+\kant[1]
+
+\section{Section}
+\subsection{Sous-section}
+% \kant[5]
+\subsubsection{Sous-sous-section}
+\kant[5]
+
+\chapter{Autre chapitre}
+\section{Section}
+\subsection{Sous-section}
+\subsubsection{Sous-sous-section}
+\kant
+
+
+\backmatter
+\tableofcontents
+\listoffigures
+\listoftables
+
+\dernierepage
+\section*{Résumé}
+\kant[1]
+\paragraph{Mots-clés} mot, mot, mot
+
+\section*{Abstract}
+\kant[1]
+\paragraph{Keywords} word, word, word
+\end{document}

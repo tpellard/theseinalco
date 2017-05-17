@@ -1,0 +1,233 @@
+%% theseinalco.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{theseinalco}[2017/05/17 v0.2 modèle de thèse pour l'INALCO]
+
+\RequirePackage{etoolbox}
+
+%%%%%%%%%%%%%%% Marges %%%%%%%%%%%%%%%
+\RequirePackage{geometry}
+\RequirePackage{typearea}
+\typearea[8mm]{9}% dimensions harmonieuses avec une reliure
+\AtBeginDocument{\ifdef{\singlespacing}{\relax}{\newcommand*{\singlespacing}{}}}% si l'extension setspace n'est pas chargée
+
+%%%%%%%%%%%%%%% Style des titres %%%%%%%%%%%%%%%
+\RequirePackage[explicit]{titlesec}
+\titleformat{\part}[display]{\singlespacing\centering\LARGE}{\scshape\MakeLowercase\partname}{0em}{\vspace{20pt}\titlerule\vspace{30pt}\Huge\bfseries #1}[]
+\titleformat{\chapter}[display]{\singlespacing\raggedright\LARGE}{\scshape chapitre\quad\thechapter}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
+\titleformat{name=\chapter,numberless}[display]{\singlespacing\raggedright\LARGE}{}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
+\titleformat{\section}[hang]{\singlespacing\raggedright\normalfont\Large\bfseries}{\thesection}{1em}{{#1}}
+\titleformat{\subsection}[hang]{\singlespacing\raggedright\normalfont\normalsize\Large}{\thesubsection}{1em}{\textit{#1}}
+\titleformat{\subsubsection}[hang]{\singlespacing\raggedright\normalfont\normalsize}{\thesubsubsection}{1em}{\textit{#1}}
+
+%%%%%%%%%%%%%%% Style des pages %%%%%%%%%%%%%%%
+\RequirePackage{titleps}
+\renewpagestyle{myheadings}{%
+\sethead[\small\thechapter\quad\textit{\chaptertitle}][][] % even
+{}{}{\small\thesection\quad\textit{\sectiontitle}} % odd
+\setfoot[\thepage][][]{}{}{\thepage}
+}
+\renewpagestyle{plain}{\setfoot[\thepage][][]{}{}{\thepage}}
+\pagestyle{myheadings}
+\RequirePackage{emptypage}
+
+%%%%%%%%%%%%%%% Style des tables des contenus %%%%%%%%%%%%%%%
+\RequirePackage{tocstyle}
+\usetocstyle{nopagecolumn}
+\settocstylefeature[-1]{entryhook}{\normalfont\large\bfseries}
+\settocstylefeature[0]{entryhook}{\normalfont\bfseries}
+\setcounter{secnumdepth}{3}
+%% Pour avoir les tables de contenus toujours en interligne simple
+\preto\tableofcontents{\begingroup\singlespacing}
+\appto\tableofcontents{\endgroup}
+\preto\listoffigures{\begingroup\singlespacing}
+\appto\listoffigures{\endgroup}
+\preto\listoftables{\begingroup\singlespacing}
+\appto\listoftables{\endgroup}
+
+%%%%%%%%%%%%%%% Style des légendes %%%%%%%%%%%%%%%
+\RequirePackage[format=plain,labelformat=simple,labelsep=quad,textformat=period,font={small},labelfont={sc}]{caption}
+\captionsetup[figure]{name=figure}
+\captionsetup[table]{name=tableau}
+
+%%%%%%%%%%%%%%% Style des listes %%%%%%%%%%%%%%%
+\RequirePackage{enumitem}
+\setlist{nosep}
+\renewcommand{\labelitemi}{\textendash}
+\renewcommand{\labelitemii}{\textperiodcentered}
+
+%%%%%%%%%%%%%%% Résout le problème de l'espace autour des guillemets %%%%%%%%%%%%%%%
+\RequirePackage{ifxetex}
+\ifxetex
+  \appto\french@punctuation{%
+      \XeTeXinterchartoks \french@punctguillstart \z@ = {\nobreak\thinspace}% "«a" -> "« a"
+      \XeTeXinterchartoks \french@punctguillstart 4095 = {\xpg@unskip\thinspace\xpg@nospace{}}% "«  " -> "«~"
+      \XeTeXinterchartoks 4095 \french@punctguillend = {\xpg@unskip\nobreak\thinspace}% "  »" -> "~»"
+      \XeTeXinterchartoks 4095 \french@punctthin = {\xpg@unskip\nobreak\thinspace}%
+      \XeTeXinterchartoks 4095 \french@punctthick = {\xpg@unskip\nobreak\thinspace}%  
+  }{}{}
+  \else\relax
+  \fi
+
+%%%%%%%%%%%%%%% Nouveaux champs de métadonnées %%%%%%%%%%%%%%%
+\RequirePackage{datatool}%pour mettre en en forme la liste des membres du jury
+\makeatletter
+\newcommand{\subtitle}[1]{\def\@subtitle{#1}}\subtitle{}
+\newcommand{\universite}[1]{\def\@universite{#1}}\universite{}
+\newcommand{\couniversite}[1]{\def\@couniversite{#1}}\couniversite{}
+\newcommand{\ecoledoctorale}[1]{\def\@ecoledoctorale{#1}}\ecoledoctorale{}
+\newcommand{\coecoledoctorale}[1]{\def\@coecoledoctorale{#1}}\coecoledoctorale{}
+\newcommand{\unite}[1]{\def\@unite{#1}}\unite{}
+\newcommand{\counite}[1]{\def\@counite{#1}}\counite{}
+\newcommand{\diplome}[1]{\def\@diplome{#1}}\diplome{}
+\newcommand{\grade}[1]{\def\@grade{#1}}\grade{}
+\newcommand{\discipline}[1]{\def\@discipline{#1}}\discipline{}
+\newcommand{\direction}[1]{\def\@direction{#1}}\direction{}
+\newcommand{\preauthor}[1]{\def\@preauthor{#1}}\preauthor{}
+\newcommand{\logo}[1]{\def\@logo{#1}}\logo{}
+
+\makeatother
+\renewcommand{\dtlheaderformat}[1]{}
+\DTLnewdb{ldirection}
+\newcommand*{\directeur}[4]{%
+  \DTLnewrow{ldirection}%
+  \DTLnewdbentry{ldirection}{civilite}{#1}%
+  \DTLnewdbentry{ldirection}{prenom}{#2}%
+  \DTLnewdbentry{ldirection}{nom}{#3}%
+  \DTLnewdbentry{ldirection}{affiliation}{#4}%
+}
+\DTLnewdb{lrapporteur}
+\newcommand*{\rapporteur}[4]{%
+  \DTLnewrow{lrapporteur}%
+  \DTLnewdbentry{lrapporteur}{civilite}{#1}%
+  \DTLnewdbentry{lrapporteur}{prenom}{#2}%
+  \DTLnewdbentry{lrapporteur}{nom}{#3}%
+  \DTLnewdbentry{lrapporteur}{affiliation}{#4}%
+}
+\DTLnewdb{ljury}
+\newcommand*{\jury}[4]{%
+  \DTLnewrow{ljury}%
+  \DTLnewdbentry{ljury}{civilite}{#1}%
+  \DTLnewdbentry{ljury}{prenom}{#2}%
+  \DTLnewdbentry{ljury}{nom}{#3}%
+  \DTLnewdbentry{ljury}{affiliation}{#4}%
+}
+
+%%%%%%%%%%%%%%% Page de garde %%%%%%%%%%%%%%%
+\RequirePackage{graphicx}
+\RequirePackage{tabulary}
+\makeatletter
+\renewcommand{\maketitle}{
+  \begin{titlepage}
+  \newgeometry{margin=20mm}
+  \singlespacing
+  \begin{center}
+    \if\@logo\@empty\relax
+      \else\@logo\par\bigskip\bigskip
+      \fi
+    \if\@universite\@empty\relax
+      \else\resizebox{\linewidth}{!}{\scshape\@universite}
+      \fi
+    \if\@ecoledoctorale\@empty\relax
+      \else \par\smallskip\@ecoledoctorale
+      \fi
+    \if\@unite\@empty\relax
+      \else\par\smallskip\@unite
+      \fi
+  \end{center}
+  \vfill
+  \begin{center}
+    \ifx\@diplome\@empty\relax
+      \else
+      \LARGE\textsc{\MakeLowercase\@diplome}
+      \par
+      \fi
+    \ifx\@couniversite\@empty\relax
+      \else
+      \bigskip\par\normalsize avec\par
+      \Large\@couniversite
+      \fi
+    \ifx\@coecoledoctorale\@empty\relax
+      \else
+      \par\large\@coecoledoctorale
+      \fi
+    \ifx\@counite\@empty\relax
+      \else
+      \par\normalsize\@counite
+      \fi
+    \ifx\@preauthor\@empty\relax
+      \else\bigskip\par\normalsize\@preauthor\par
+      \fi
+    \ifx\@author\@empty\relax
+      \else\huge\@author\par\bigskip\bigskip
+      \fi
+    \normalsize
+    \ifx\@date\@empty\relax
+      \else\par\@date\par
+      \fi
+    \ifx\@grade\@empty\relax
+      \else\par\@grade\par
+      \fi
+    \ifx\@discipline\@empty\relax
+      \else\@discipline\par
+      \fi
+  \end{center}
+  \vfill\vfill\vfill
+  \begin{center}
+    \ifx\@title\@empty\relax
+      \else\Huge\@title
+      \fi
+    \ifx\@subtitle\@empty\relax
+      \else
+      \bigskip
+      \par\LARGE\@subtitle
+      \fi
+  \end{center}
+  \vfill\vfill\vfill\vfill\vfill
+  \begin{flushleft}
+  \begin{tabulary}{\linewidth}{@{}lL@{}}
+    \DTLifdbempty{ldirection}{\relax}{
+      \multicolumn{1}{@{}l@{}}{\textit{\@direction}} \\[3pt]
+      \DTLforeach{ldirection}{%
+	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
+	\civi\ \prenom\ \nom & \affil \\
+	}\\
+      }
+    \DTLifdbempty{lrapporteur}{\relax}{
+      \multicolumn{1}{@{}l@{}}{\textit{Rapporteurs:}} \\[3pt]
+      \DTLforeach{lrapporteur}{%
+	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
+	\civi\ \prenom\ \nom & \affil \\
+	}\\
+      }
+    \DTLifdbempty{ljury}{\relax}{
+      \hline\\
+      \multicolumn{1}{@{}l@{}}{\textit{Membres du jury:}} \\[3pt]
+      \DTLforeach{ljury}{%
+	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
+	\civi\ \prenom\ \nom & \affil \\
+	}
+      }
+  \end{tabulary}
+  \end{flushleft}
+  \end{titlepage}
+  \restoregeometry
+  }
+
+%%%%%%%%%%%%%%% 4e de couverture %%%%%%%%%%%%%%%
+\newcommand{\cleartoverso}{\clearpage\if@twoside
+  \ifodd\c@page\hbox{}\thispagestyle{cleared}%
+  \newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi
+  }
+\newcommand{\dernierepage}{
+  \pagestyle{empty}
+  \cleardoublepage\hbox{}
+  \cleartoverso
+  \newgeometry{margin=20mm}
+  \singlespacing
+  \begin{center}
+  \if\@logo\@empty\relax\else\@logo\par\bigskip\bigskip\fi
+  \if\@author\@empty\relax\else\par\large\@author\bigskip\fi
+  \if\@title\@empty\relax\else\par\Large\@title\medskip\fi
+  \if\@subtitle\@empty\relax\else\par\large\@subtitle\fi
+  \end{center}\bigskip
+}

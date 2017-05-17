@@ -2,7 +2,7 @@
 
 ### À propos de ce dépôt ###
 
-Ce dépôt accueille le fichier style LaTeX proposé dans le cadre de la formation LaTeX de l'[INALCO](http://www.inalco.fr/) assurée par Thomas Pellard.
+Ce dépôt accueille le fichier style LaTeX pour les thèses en sciences humaines proposé dans le cadre de la formation LaTeX de l'[INALCO](http://www.inalco.fr/).
 
 Le style respecte les directives de l'école doctorale de l'[INALCO](http://www.inalco.fr/) concernant la présentation des thèses de doctorat, mais il est prévu pour pouvoir être adapté à des mémoires de master ou à des travaux réalisés dans d'autres universités.
 
