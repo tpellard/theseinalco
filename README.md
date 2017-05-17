@@ -1,5 +1,7 @@
 # README #
 
+`theseinalco.sty` version 0.2 2017-05-17
+
 ### À propos de ce dépôt ###
 
 Ce dépôt accueille le fichier style LaTeX pour les thèses en sciences humaines proposé dans le cadre de la formation LaTeX de l'[INALCO](http://www.inalco.fr/).
