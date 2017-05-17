@@ -4,7 +4,7 @@
 
 Ce dépôt accueille le fichier style LaTeX pour les thèses en sciences humaines proposé dans le cadre de la formation LaTeX de l'[INALCO](http://www.inalco.fr/).
 
-Le style respecte les directives de l'école doctorale de l'[INALCO](http://www.inalco.fr/) concernant la présentation des thèses de doctorat, mais il est prévu pour pouvoir être adapté à des mémoires de master ou à des travaux réalisés dans d'autres universités.
+Le style respecte les directives de l'école doctorale de l'[INALCO](http://www.inalco.fr/) concernant la présentation des thèses de doctorat, mais il est prévu pour pouvoir être adapté à des mémoires de master ou d'habilitation, et aux travaux réalisés dans d'autres institutions.
 
 La présentation est volontairement sobre et adopte des marges généreuses.
 
