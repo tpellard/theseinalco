@@ -1,0 +1,37 @@
+# README #
+
+### À propos de ce dépôt ###
+
+Ce dépôt accueille le fichier style LaTeX proposé dans le cadre de la formation LaTeX de l'[INALCO](http://www.inalco.fr/) assurée par Thomas Pellard.
+
+Le style respecte les directives de l'école doctorale de l'[INALCO](http://www.inalco.fr/) concernant la présentation des thèses de doctorat, mais il est prévu pour pouvoir être adapté à des mémoires de master ou à des travaux réalisés dans d'autres universités.
+
+La présentation est volontairement sobre et adopte des marges généreuses.
+
+### Particularités ###
+
+* de nombreux champs de métadonnées à remplir permettent de réaliser automatiquement une page de titre mentionnant toutes les informations requises (université, école doctorale, discipline, diplôme, titre, auteur, date, directeur, rapporteurs, jury…)
+* prise en charge du cas des thèses en cotutelle
+* résolution du problème des guillemets français pour les utilisateurs de l'extension polyglossia
+
+### Prérequis ###
+
+* un système LaTeX récent
+* les extensions `etoolbox`, `geometry`, `typearea`, `titlesec`, `titleps`, `tocstyle`, `caption`, `enumitem`, `ifxetex`, `datatool`, `graphicx`, `tabulary`
+
+### Fichiers ###
+
+* `theseinalco.sty`: le fichier style
+* `modele.tex`: un exemple d'utilisation avec XeLaTeX et la police libre [Linux Libertine O](http://www.linuxlibertine.org/)
+* `inalco-logo-color.pdf`: le fichier image du logo de l'[INALCO](http://www.inalco.fr/)
+* `modele.pdf`: le résultat de l'exemple d'utilisation
+
+### Mode d'emploi ###
+
+* télécharger le fichier `theseinalco.sty` et le placer dans le même dossier que le fichier `.tex` ou bien dans un dossier que LaTeX peut trouver
+* déclarer `\usepackage{theseinalco}` dans le document `.tex`, de préférence au début du préambule, et a priori dans un document de classe `book`
+* consulter l'exemple `modele.tex` pour voir notamment comment remplir les métadonnées
+
+### Problèmes et suggestions ###
+
+N'hésitez pas à me contacter (Thomas Pellard, <thomas.pellard@gmail.com>) en cas de problème ou pour me suggérer des améliorations.
