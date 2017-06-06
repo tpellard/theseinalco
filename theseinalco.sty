@@ -1,6 +1,6 @@
 %% theseinalco.sty
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{theseinalco}[v. 0.2 2017-05-17 style de thèse pour l'INALCO]
+\ProvidesPackage{theseinalco}[2017/06/06 v. 0.3 style de thèse pour l'INALCO]
 
 \RequirePackage{etoolbox}
 
@@ -11,9 +11,10 @@
 \AtBeginDocument{\ifdef{\singlespacing}{\relax}{\newcommand*{\singlespacing}{}}}% si l'extension setspace n'est pas chargée
 
 %%%%%%%%%%%%%%% Style des titres %%%%%%%%%%%%%%%
+\setcounter{secnumdepth}{4}
 \RequirePackage[explicit]{titlesec}
 \titleformat{\part}[display]{\singlespacing\centering\LARGE}{\scshape\MakeLowercase\partname}{0em}{\vspace{20pt}\titlerule\vspace{30pt}\Huge\bfseries #1}[]
-\titleformat{\chapter}[display]{\singlespacing\raggedright\LARGE}{\scshape chapitre\quad\thechapter}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
+\titleformat{\chapter}[display]{\singlespacing\raggedright\LARGE}{\scshape\MakeLowercase\chaptertitlename\quad\thechapter}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
 \titleformat{name=\chapter,numberless}[display]{\singlespacing\raggedright\LARGE}{}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
 \titleformat{\section}[hang]{\singlespacing\raggedright\normalfont\Large\bfseries}{\thesection}{1em}{{#1}}
 \titleformat{\subsection}[hang]{\singlespacing\raggedright\normalfont\normalsize\Large}{\thesubsection}{1em}{\textit{#1}}
@@ -22,20 +23,27 @@
 %%%%%%%%%%%%%%% Style des pages %%%%%%%%%%%%%%%
 \RequirePackage{titleps}
 \renewpagestyle{myheadings}{%
-\sethead[\small\thechapter\quad\textit{\chaptertitle}][][] % even
-{}{}{\small\thesection\quad\textit{\sectiontitle}} % odd
+\sethead[\small\thechapter\quad\textit{\chaptertitle}][][] % paire
+{}{}{\small\thesection\quad\textit{\chaptertitle}} % impaire
+\setfoot[\thepage][][]{}{}{\thepage}
+}
+\newpagestyle{backmatter}{%
+\sethead[\small\textit{\chaptertitle}][][] % paire
+{}{}{\small\textit{\sectiontitle}} % impaire
 \setfoot[\thepage][][]{}{}{\thepage}
 }
 \renewpagestyle{plain}{\setfoot[\thepage][][]{}{}{\thepage}}
-\pagestyle{myheadings}
 \RequirePackage{emptypage}
+\pagestyle{myheadings}
+\appto{\frontmatter}{\pagestyle{plain}}
+\appto{\mainmatter}{\pagestyle{myheadings}}
+\appto{\backmatter}{\pagestyle{backmatter}}
 
 %%%%%%%%%%%%%%% Style des tables des contenus %%%%%%%%%%%%%%%
 \RequirePackage{tocstyle}
 \usetocstyle{nopagecolumn}
 \settocstylefeature[-1]{entryhook}{\normalfont\large\bfseries}
 \settocstylefeature[0]{entryhook}{\normalfont\bfseries}
-\setcounter{secnumdepth}{3}
 %% Pour avoir les tables de contenus toujours en interligne simple
 \preto\tableofcontents{\begingroup\singlespacing}
 \appto\tableofcontents{\endgroup}

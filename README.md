@@ -1,6 +1,6 @@
 # README #
 
-`theseinalco.sty` version 0.2 2017-05-17
+`theseinalco.sty` version 0.3 2017-06-06
 
 ### À propos de ce dépôt ###
 
