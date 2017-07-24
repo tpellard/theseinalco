@@ -1,6 +1,6 @@
 %% theseinalco.sty
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{theseinalco}[2017/06/06 v. 0.3 style de thèse pour l'INALCO]
+\ProvidesPackage{theseinalco}[2017/07/24 v. 0.4 style de thèse pour l'INALCO]
 
 \RequirePackage{etoolbox}
 
@@ -25,7 +25,7 @@
 \RequirePackage{titleps}
 \renewpagestyle{myheadings}{%
 \sethead[\small\thechapter\quad\textit{\chaptertitle}][][] % paire
-{}{}{\small\thesection\quad\textit{\chaptertitle}} % impaire
+{}{}{\small\thesection\quad\textit{\sectiontitle}} % impaire
 \setfoot[\thepage][][]{}{}{\thepage}
 }
 \newpagestyle{backmatter}{%
