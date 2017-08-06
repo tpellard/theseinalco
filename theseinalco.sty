@@ -77,6 +77,13 @@
   \else\relax
   \fi
 
+%%%%%%%%%%%%%%% Résout le problème des titres de parties en français dans la ToC %%%%%%%%%%%%%%%
+\AtBeginDocument{\appto\captionsfrench{%
+  \def\partname{\@Fpt partie}%
+  \def\thepart{\Roman{part}}%
+  \def\thepart{\partname}%
+}}
+
 %%%%%%%%%%%%%%% Nouveaux champs de métadonnées %%%%%%%%%%%%%%%
 \RequirePackage{datatool}%pour mettre en en forme la liste des membres du jury
 \makeatletter
