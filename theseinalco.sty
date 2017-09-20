@@ -20,16 +20,17 @@
 \titleformat{\section}[hang]{\singlespacing\raggedright\normalfont\Large\bfseries}{\thesection}{1em}{{#1}}
 \titleformat{\subsection}[hang]{\singlespacing\raggedright\normalfont\normalsize\Large}{\thesubsection}{1em}{\textit{#1}}
 \titleformat{\subsubsection}[hang]{\singlespacing\raggedright\normalfont\normalsize}{\thesubsubsection}{1em}{\textit{#1}}
+\titleformat{\paragraph}[runin]{\normalfont\normalsize}{}{0em}{\textbf{#1}}
 
 %%%%%%%%%%%%%%% Style des pages %%%%%%%%%%%%%%%
 \RequirePackage{titleps}
 \renewpagestyle{myheadings}{%
-\sethead[\small\thechapter\quad\textit{\chaptertitle}][][] % paire
+\sethead[\small\thechapter\quad\textsc{\MakeLowercase\chaptertitle}][][] % paire
 {}{}{\small\thesection\quad\textit{\sectiontitle}} % impaire
 \setfoot[\thepage][][]{}{}{\thepage}
 }
 \newpagestyle{backmatter}{%
-\sethead[\small\textit{\chaptertitle}][][] % paire
+\sethead[\small\textsc{\MakeLowercase\chaptertitle}][][] % paire
 {}{}{\small\textit{\sectiontitle}} % impaire
 \setfoot[\thepage][][]{}{}{\thepage}
 }
