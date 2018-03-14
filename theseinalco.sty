@@ -1,94 +1,78 @@
 %% theseinalco.sty
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{theseinalco}[2017/08/06 v. 0.5 style de thèse pour l'INALCO]
+\ProvidesPackage{theseinalco}[2018/03/14 v. 0.5 style de thèse pour l'INALCO]
 
-\RequirePackage{etoolbox}
+\@ifclassloaded{scrbook}%
+  {}%
+  {\PackageWarning{theseinalco.sty}{theseinalco.sty can only be used with the scrbook document class}}%
 
-%%%%%%%%%%%%%%% Marges %%%%%%%%%%%%%%%
-\RequirePackage{geometry}
-\RequirePackage{typearea}
-\typearea[8mm]{9}% dimensions harmonieuses avec une reliure
-\AtBeginDocument{\ifdef{\singlespacing}{\relax}{\newcommand*{\singlespacing}{}}}% si l'extension setspace n'est pas chargée
-\raggedbottom
-
-%%%%%%%%%%%%%%% Style des titres %%%%%%%%%%%%%%%
-\setcounter{secnumdepth}{4}
-\RequirePackage[explicit]{titlesec}
-\titleformat{\part}[display]{\singlespacing\centering\LARGE}{\scshape\MakeLowercase\partname}{0em}{\vspace{20pt}\titlerule\vspace{30pt}\Huge\bfseries #1}[]
-\titleformat{\chapter}[display]{\singlespacing\raggedright\LARGE}{\scshape\MakeLowercase\chaptertitlename\quad\thechapter}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
-\titleformat{name=\chapter,numberless}[display]{\singlespacing\raggedright\LARGE}{}{0em}{\vspace{3pt}\titlerule\vspace{10pt}\huge\bfseries#1}[]
-\titleformat{\section}[hang]{\singlespacing\raggedright\normalfont\Large\bfseries}{\thesection}{1em}{{#1}}
-\titleformat{\subsection}[hang]{\singlespacing\raggedright\normalfont\normalsize\Large}{\thesubsection}{1em}{\textit{#1}}
-\titleformat{\subsubsection}[hang]{\singlespacing\raggedright\normalfont\normalsize}{\thesubsubsection}{1em}{\textit{#1}}
-\titleformat{\paragraph}[runin]{\normalfont\normalsize}{}{0em}{\textbf{#1}}
-
-%%%%%%%%%%%%%%% Style des pages %%%%%%%%%%%%%%%
-\RequirePackage{titleps}
-\renewpagestyle{myheadings}{%
-\sethead[\small\thechapter\quad\textsc{\MakeLowercase\chaptertitle}][][] % paire
-{}{}{\small\thesection\quad\textit{\sectiontitle}} % impaire
-\setfoot[\thepage][][]{}{}{\thepage}
+%%% Marges et interligne
+\KOMAoptions{%
+  paper=a4,%papier format a4
+  DIV=9,%calcul des marges
+  BCOR=8mm,%correction pour la reliure
+  titlepage=firstiscover,%la page de titre est la couverture et les marges y sont ajustées
 }
-\newpagestyle{backmatter}{%
-\sethead[\small\textsc{\MakeLowercase\chaptertitle}][][] % paire
-{}{}{\small\textit{\sectiontitle}} % impaire
-\setfoot[\thepage][][]{}{}{\thepage}
+
+\raggedbottom% pas d'espace extensible entre les paragraphes
+
+\RequirePackage{scrhack}
+\KOMAoption{setspace}{true}
+\RequirePackage{setspace}
+
+%%% Divisions hiérarchiques
+\KOMAoptions{%
+  chapterprefix=true,%imprime le mot chapitre dans les titres de chapitre
+  appendixprefix=true,%imprime le mot annexe dans les titres d'annexe
+  headings=big,%titres de divisions hiérarchiquer de grande taille
+  numbers=noendperiod,%pas de points à la fin des numéros de divisions
 }
-\renewpagestyle{plain}{\setfoot[\thepage][][]{}{}{\thepage}}
-\RequirePackage{emptypage}
-\pagestyle{myheadings}
-\appto{\frontmatter}{\pagestyle{plain}}
-\appto{\mainmatter}{\pagestyle{myheadings}}
-\appto{\backmatter}{\pagestyle{backmatter}}
 
-%%%%%%%%%%%%%%% Style des tables des contenus %%%%%%%%%%%%%%%
-\RequirePackage{tocstyle}
-\usetocstyle{nopagecolumn}
-\settocstylefeature[-1]{entryhook}{\normalfont\large\bfseries}
-\settocstylefeature[0]{entryhook}{\normalfont\bfseries}
-%% Pour avoir les tables de contenus toujours en interligne simple
-\preto\tableofcontents{\begingroup\singlespacing}
-\appto\tableofcontents{\endgroup}
-\preto\listoffigures{\begingroup\singlespacing}
-\appto\listoffigures{\endgroup}
-\preto\listoftables{\begingroup\singlespacing}
-\appto\listoftables{\endgroup}
+\setcounter{secnumdepth}{\subsubsectionnumdepth}% les sous-sous-sections sont numérotées
 
-%%%%%%%%%%%%%%% Style des légendes %%%%%%%%%%%%%%%
-\RequirePackage[format=plain,labelformat=simple,labelsep=quad,textformat=period,font={small},labelfont={sc}]{caption}
-\captionsetup[figure]{name=figure}
-\captionsetup[table]{name=tableau}
+% Apparence des titres de partie
+\renewcommand*{\partformat}{%
+    \partname~\thepart%
+    \par\nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{10pt}%
+    \rule{\textwidth}{.5pt}%
+    \nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{15pt}%
+}
+
+% Apparence des titres de chapitre
+\renewcommand*{\chapterformat}{%
+    \chapapp~\thechapter%
+    \par\nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{10pt}%
+    \rule{\textwidth}{.5pt}%
+    \nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{15pt}%
+}
+
+% Mise en forme des titres de divisions
+\renewcommand*{\subsectionformat}{\upshape\thesubsection\autodot\enskip}
+\renewcommand*{\subsubsectionformat}{\upshape\thesubsubsection\autodot\enskip}
+\addtokomafont{disposition}{\rmfamily\setstretch{1}}
+\addtokomafont{subsection}{\itshape}
+
+%%% Tables des contenus
+\addtokomafont{partentry}{\rmfamily}
+\addtokomafont{chapterentry}{\rmfamily}
+\RedeclareSectionCommands[
+  tocraggedpagenumber,%
+  toclinefill=\hspace{.5em}%
+]{part,chapter,section,subsection,subsubsection,paragraph,subparagraph}
+\preto{\tableofcontents}{\setstretch{1}}
+\KOMAoptions{bibliography=totoc}% bibliographie dans la table des matières
+
+
+%%% En-têtes et pieds de pages
+\addtokomafont{pagehead}{\small}
 
 %%%%%%%%%%%%%%% Style des listes %%%%%%%%%%%%%%%
 \RequirePackage{enumitem}
 \setlist{nosep}
-\renewcommand{\labelitemi}{\textendash}
-\renewcommand{\labelitemii}{\textperiodcentered}
+\setlist[description]{font=\rmfamily}
 
-%%%%%%%%%%%%%%% Résout le problème de l'espace autour des guillemets %%%%%%%%%%%%%%%
-\RequirePackage{ifxetex}
-\ifxetex
-  \appto\french@punctuation{%
-      \XeTeXinterchartoks \french@punctguillstart \z@ = {\nobreak\thinspace}% "«a" -> "« a"
-      \XeTeXinterchartoks \french@punctguillstart 4095 = {\xpg@unskip\thinspace\xpg@nospace{}}% "«  " -> "«~"
-      \XeTeXinterchartoks 4095 \french@punctguillend = {\xpg@unskip\nobreak\thinspace}% "  »" -> "~»"
-      \XeTeXinterchartoks 4095 \french@punctthin = {\xpg@unskip\nobreak\thinspace}%
-      \XeTeXinterchartoks 4095 \french@punctthick = {\xpg@unskip\nobreak\thinspace}%  
-  }{}{}
-  \else\relax
-  \fi
-
-%%%%%%%%%%%%%%% Résout le problème des titres de parties en français dans la ToC %%%%%%%%%%%%%%%
-\AtBeginDocument{\appto\captionsfrench{%
-  \def\partname{\@Fpt partie}%
-  \def\thepart{\Roman{part}}%
-  \def\thepart{\partname}%
-}}
-
-%%%%%%%%%%%%%%% Nouveaux champs de métadonnées %%%%%%%%%%%%%%%
-\RequirePackage{datatool}%pour mettre en en forme la liste des membres du jury
-\makeatletter
-\newcommand{\subtitle}[1]{\def\@subtitle{#1}}\subtitle{}
+% %%%%%%%%%%%%%%% Nouveaux champs de métadonnées %%%%%%%%%%%%%%%
+\RequirePackage{datatool}% pour mettre en en forme la liste des membres du jury
 \newcommand{\universite}[1]{\def\@universite{#1}}\universite{}
 \newcommand{\couniversite}[1]{\def\@couniversite{#1}}\couniversite{}
 \newcommand{\ecoledoctorale}[1]{\def\@ecoledoctorale{#1}}\ecoledoctorale{}
@@ -102,7 +86,6 @@
 \newcommand{\preauthor}[1]{\def\@preauthor{#1}}\preauthor{}
 \newcommand{\logo}[1]{\def\@logo{#1}}\logo{}
 
-\makeatother
 \renewcommand{\dtlheaderformat}[1]{}
 \DTLnewdb{ldirection}
 \newcommand*{\directeur}[4]{%
@@ -129,18 +112,31 @@
   \DTLnewdbentry{ljury}{affiliation}{#4}%
 }
 
-%%%%%%%%%%%%%%% Page de garde %%%%%%%%%%%%%%%
+%%% Page de titre
 \RequirePackage{graphicx}
 \RequirePackage{tabulary}
-\makeatletter
-\renewcommand{\maketitle}{
-  \begin{titlepage}
-  \newgeometry{margin=20mm}
-  \singlespacing
+\renewcommand{\coverpageleftmargin}{2cm}
+\renewcommand{\maketitle}{%
+\begin{titlepage}
+\setstretch{1}%
+        \topmargin=\dimexpr \coverpagetopmargin-1in\relax
+        \oddsidemargin=\dimexpr \coverpageleftmargin-1in\relax
+        \evensidemargin=\dimexpr \coverpageleftmargin-1in\relax
+        \textwidth=\dimexpr
+        \paperwidth-\coverpageleftmargin-\coverpagerightmargin\relax
+        \textheight=\dimexpr
+        \paperheight-\coverpagetopmargin-\coverpagebottommargin\relax
+        \headheight=0pt
+        \headsep=0pt
+        \footskip=\baselineskip
+        \@colht=\textheight
+        \@colroom=\textheight
+        \vsize=\textheight
+        \columnwidth=\textwidth
+        \hsize=\columnwidth
+        \linewidth=\hsize
   \begin{center}
-    \if\@logo\@empty\relax
-      \else\@logo\par\bigskip\bigskip
-      \fi
+    \ifdefempty{\@logo}{\relax}{\@logo\par\bigskip\bigskip}
     \if\@universite\@empty\relax
       \else\resizebox{\linewidth}{!}{\scshape\@universite}
       \fi
@@ -226,25 +222,58 @@
       }
   \end{tabulary}
   \end{flushleft}
-  \end{titlepage}
-  \restoregeometry
-  }
-
-%%%%%%%%%%%%%%% 4e de couverture %%%%%%%%%%%%%%%
-\newcommand{\cleartoverso}{\clearpage\if@twoside
-  \ifodd\c@page\hbox{}\thispagestyle{cleared}%
-  \newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi
-  }
-\newcommand{\dernierepage}{
-  \pagestyle{empty}
-  \cleardoublepage\hbox{}
-  \cleartoverso
-  \newgeometry{margin=20mm}
-  \singlespacing
-  \begin{center}
-  \if\@logo\@empty\relax\else\@logo\par\bigskip\bigskip\fi
-  \if\@author\@empty\relax\else\par\large\@author\bigskip\fi
-  \if\@title\@empty\relax\else\par\Large\@title\medskip\fi
-  \if\@subtitle\@empty\relax\else\par\large\@subtitle\fi
-  \end{center}\bigskip
+\end{titlepage}
 }
+
+%%% 4e de couverture
+\newenvironment{verso}{%
+\cleardoubleevenemptypage
+\setstretch{1}%
+\KOMAoptions{twoside = false,BCOR=0mm}
+\renewcommand{\coverpageleftmargin}{3cm}
+  \begin{titlepage}
+        \topmargin=\dimexpr \coverpagetopmargin-1in\relax
+        \oddsidemargin=\dimexpr \coverpageleftmargin-1in\relax
+        \evensidemargin=\dimexpr \coverpageleftmargin-1in\relax
+        \textwidth=\dimexpr
+        \paperwidth-\coverpageleftmargin-\coverpagerightmargin\relax
+        \textheight=\dimexpr
+        \paperheight-\coverpagetopmargin-\coverpagebottommargin\relax
+        \headheight=0pt
+        \headsep=0pt
+        \footskip=\baselineskip
+        \@colht=\textheight
+        \@colroom=\textheight
+        \vsize=\textheight
+        \columnwidth=\textwidth
+        \hsize=\columnwidth
+        \linewidth=\hsize
+    \begin{center}
+    \ifdefempty{\@logo}{\relax}{\@logo\par\bigskip\bigskip}
+    \if\@author\@empty\relax\else\par\large\@author\bigskip\fi
+    \if\@title\@empty\relax\else\par\Large\@title\medskip\fi
+    \if\@subtitle\@empty\relax\else\par\large\@subtitle\fi
+    \end{center}
+    \bigskip\bigskip
+}{%
+  \end{titlepage}%
+}
+
+%%% Pour le français
+\RequirePackage{ifxetex}
+\ifxetex
+  \AtEndPreamble{\ifthenelse{\equal{\xpg@main@language}{french}}{%
+  \RequirePackage{impnattypo}% charge l'extension des règles de l'Imprimerie nationale
+  \setlist[itemize,1]{label=\textendash}% réglage des listes à la française
+  \setlist[itemize,2]{label=\textperiodcentered}%
+  }{}}
+  % Résout le problème de l'espace autour des guillemets français
+  \appto\french@punctuation{%
+      \XeTeXinterchartoks \french@punctguillstart \z@ = {\nobreak\thinspace}% "«a" -> "« a"
+      \XeTeXinterchartoks \french@punctguillstart 4095 = {\xpg@unskip\thinspace\xpg@nospace{}}% "«  " -> "«~"
+      \XeTeXinterchartoks 4095 \french@punctguillend = {\xpg@unskip\nobreak\thinspace}% "  »" -> "~»"
+      \XeTeXinterchartoks 4095 \french@punctthin = {\xpg@unskip\nobreak\thinspace}%
+      \XeTeXinterchartoks 4095 \french@punctthick = {\xpg@unskip\nobreak\thinspace}%  
+  }{}{}
+  \else\relax
+  \fi

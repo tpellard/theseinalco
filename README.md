@@ -1,6 +1,6 @@
 # README #
 
-`theseinalco.sty` version 0.3 2017-06-06
+`theseinalco.sty` version 0.5 2018-03-14
 
 ### À propos de ce dépôt ###
 
@@ -19,7 +19,8 @@ La présentation est volontairement sobre et adopte des marges généreuses.
 ### Prérequis ###
 
 * un système LaTeX récent
-* les extensions `etoolbox`, `geometry`, `typearea`, `titlesec`, `titleps`, `tocstyle`, `caption`, `enumitem`, `ifxetex`, `datatool`, `graphicx`, `tabulary`
+* la classe `scrbook`
+* les extensions `datatool`, `enumitem`, `ifxetex`, `graphicx`, `scrhack`, `setspace`, `tabulary`
 
 ### Fichiers ###
 
@@ -31,9 +32,9 @@ La présentation est volontairement sobre et adopte des marges généreuses.
 ### Mode d'emploi ###
 
 * télécharger le fichier `theseinalco.sty` et le placer dans le même dossier que le fichier `.tex` ou bien dans un dossier que LaTeX peut trouver
-* déclarer `\usepackage{theseinalco}` dans le document `.tex`, de préférence au début du préambule, et a priori dans un document de classe `book`
+* déclarer `\usepackage{theseinalco}` dans le document `.tex`, de préférence au début du préambule, et dans un document de classe `scrbook`
 * consulter l'exemple `modele.tex` pour voir notamment comment remplir les métadonnées
 
 ### Problèmes et suggestions ###
 
-N'hésitez pas à me contacter (Thomas Pellard, <thomas.pellard@gmail.com>) en cas de problème ou pour me suggérer des améliorations.
+N'hésitez pas à me contacter (Thomas Pellard, <thomas.pellard@cnrs.fr>) en cas de problème ou pour me suggérer des améliorations.
