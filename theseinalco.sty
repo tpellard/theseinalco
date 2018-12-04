@@ -53,15 +53,17 @@
 \addtokomafont{subsection}{\itshape}
 
 %%% Tables des contenus
-\addtokomafont{partentry}{\rmfamily}
-\addtokomafont{chapterentry}{\rmfamily}
+\addtokomafont{partentry}{\rmfamily\normalsize}
+\addtokomafont{chapterentry}{\rmfamily\normalsize}
+\renewcommand\addparttocentry[2]{%
+    \addtocentrydefault{part}{}{\textsc{\uppercase{#1: #2}}}%
+    }
 \RedeclareSectionCommands[
   tocraggedpagenumber,%
   toclinefill=\hspace{.5em}%
 ]{part,chapter,section,subsection,subsubsection,paragraph,subparagraph}
 \preto{\tableofcontents}{\setstretch{1}}
 \KOMAoptions{bibliography=totoc}% bibliographie dans la table des matières
-
 
 %%% En-têtes et pieds de pages
 \addtokomafont{pagehead}{\small}
