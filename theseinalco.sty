@@ -118,7 +118,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{tabulary}
 \renewcommand{\coverpageleftmargin}{2cm}
-\renewcommand{\maketitle}{%
+\AtBeginDocument{\renewcommand{\maketitle}{%
 \begin{titlepage}
 \setstretch{1}%
         \topmargin=\dimexpr \coverpagetopmargin-1in\relax
@@ -225,6 +225,7 @@
   \end{tabulary}
   \end{flushleft}
 \end{titlepage}
+}
 }
 
 %%% 4e de couverture
