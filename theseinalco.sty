@@ -271,12 +271,12 @@
   \setlist[itemize,2]{label=\textperiodcentered}%
   }{}}
   % Résout le problème de l'espace autour des guillemets français
-  \appto\french@punctuation{%
-      \XeTeXinterchartoks \french@punctguillstart \z@ = {\nobreak\thinspace}% "«a" -> "« a"
-      \XeTeXinterchartoks \french@punctguillstart 4095 = {\xpg@unskip\thinspace\xpg@nospace{}}% "«  " -> "«~"
-      \XeTeXinterchartoks 4095 \french@punctguillend = {\xpg@unskip\nobreak\thinspace}% "  »" -> "~»"
-      \XeTeXinterchartoks 4095 \french@punctthin = {\xpg@unskip\nobreak\thinspace}%
-      \XeTeXinterchartoks 4095 \french@punctthick = {\xpg@unskip\nobreak\thinspace}%  
-  }{}{}
+%   \appto\french@punctuation{%
+%       \XeTeXinterchartoks \french@punctguillstart \z@ = {\nobreak\thinspace}% "«a" -> "« a"
+%       \XeTeXinterchartoks \french@punctguillstart 4095 = {\xpg@unskip\thinspace\xpg@nospace{}}% "«  " -> "«~"
+%       \XeTeXinterchartoks 4095 \french@punctguillend = {\xpg@unskip\nobreak\thinspace}% "  »" -> "~»"
+%       \XeTeXinterchartoks 4095 \french@punctthin = {\xpg@unskip\nobreak\thinspace}%
+%       \XeTeXinterchartoks 4095 \french@punctthick = {\xpg@unskip\nobreak\thinspace}%  
+%   }{}{}
   \else\relax
   \fi
