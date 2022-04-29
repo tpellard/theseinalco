@@ -3,15 +3,35 @@
 \ProvidesPackage{theseinalco}[2020-05-03 v. 0.6 style de thèse pour l'INALCO]
 
 \@ifclassloaded{scrbook}%
-  {}%
-  {\PackageWarning{theseinalco.sty}{theseinalco.sty can only be used with the scrbook document class}}%
+  {%
+    \KOMAoptions{%
+      chapterprefix=true,%imprime le mot chapitre dans les titres de chapitre
+      appendixprefix=true,%imprime le mot annexe dans les titres d'annexe
+      }
+    % Apparence des titres de chapitre
+    \renewcommand*{\chapterformat}{%
+      \chapapp~\thechapter%
+      \par\nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{10pt}%
+      \rule{\textwidth}{.5pt}%
+      \nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{15pt}%
+    }
+    \addtokomafont{chapterentry}{\rmfamily\normalsize}
+    \RedeclareSectionCommands[
+      tocraggedpagenumber,%
+      toclinefill=\hspace{.5em}%
+    ]{chapter}
+  }%
+  {%
+%   \PackageWarning{theseinalco.sty}{theseinalco.sty can only be used with the scrbook document class}
+  }%
 
 %%% Marges et interligne
 \KOMAoptions{%
   paper=a4,%papier format a4
-  DIV=9,%calcul des marges
+  DIV=10,%calcul des marges
   BCOR=8mm,%correction pour la reliure
   titlepage=firstiscover,%la page de titre est la couverture et les marges y sont ajustées
+  twoside%recto-verso
 }
 
 \raggedbottom% pas d'espace extensible entre les paragraphes
@@ -22,8 +42,6 @@
 
 %%% Divisions hiérarchiques
 \KOMAoptions{%
-  chapterprefix=true,%imprime le mot chapitre dans les titres de chapitre
-  appendixprefix=true,%imprime le mot annexe dans les titres d'annexe
   headings=big,%titres de divisions hiérarchiquer de grande taille
   numbers=noendperiod,%pas de points à la fin des numéros de divisions
 }
@@ -38,14 +56,6 @@
     \nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{15pt}%
 }
 
-% Apparence des titres de chapitre
-\renewcommand*{\chapterformat}{%
-    \chapapp~\thechapter%
-    \par\nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{10pt}%
-    \rule{\textwidth}{.5pt}%
-    \nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{15pt}%
-}
-
 % Mise en forme des titres de divisions
 \renewcommand*{\subsectionformat}{\upshape\thesubsection\autodot\enskip}
 \renewcommand*{\subsubsectionformat}{\upshape\thesubsubsection\autodot\enskip}
@@ -54,14 +64,13 @@
 
 %%% Tables des contenus
 \addtokomafont{partentry}{\rmfamily\normalsize}
-\addtokomafont{chapterentry}{\rmfamily\normalsize}
 \renewcommand\addparttocentry[2]{%
     \addtocentrydefault{part}{}{\textsc{\uppercase{#1: #2}}}%
     }
 \RedeclareSectionCommands[
   tocraggedpagenumber,%
   toclinefill=\hspace{.5em}%
-]{part,chapter,section,subsection,subsubsection,paragraph,subparagraph}
+]{part,section,subsection,subsubsection,paragraph,subparagraph}
 \preto{\tableofcontents}{\setstretch{1}}
 \KOMAoptions{bibliography=totoc}% bibliographie dans la table des matières
 
@@ -140,7 +149,7 @@
   \begin{center}
     \ifdefempty{\@logo}{\relax}{\@logo\par\bigskip\bigskip}
     \if\@universite\@empty\relax
-      \else\resizebox{\linewidth}{!}{\scshape\@universite}
+      \else\resizebox{\linewidth}{!}{\scshape\MakeLowercase\@universite}
       \fi
     \if\@ecoledoctorale\@empty\relax
       \else \par\smallskip\@ecoledoctorale
@@ -158,8 +167,8 @@
       \fi
     \ifx\@couniversite\@empty\relax
       \else
-      \bigskip\par\normalsize avec\par
-      \Large\@couniversite
+      \bigskip\par\normalsize en co-tutelle avec\par
+      \Large{\scshape\MakeLowercase\@couniversite}
       \fi
     \ifx\@coecoledoctorale\@empty\relax
       \else
@@ -207,7 +216,7 @@
 	\civi\ \prenom\ \nom & \affil \\
 	}\\
       }
-    \DTLifdbempty{lrapporteur}{\relax}{
+    \DTLifdbempty{lrapporteur}{\\[-1em]}{
       \multicolumn{1}{@{}l@{}}{\textit{Rapporteurs:}} \\[3pt]
       \DTLforeach{lrapporteur}{%
 	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
@@ -225,6 +234,7 @@
   \end{tabulary}
   \end{flushleft}
 \end{titlepage}
+\cleardoublepage
 }
 }
 
@@ -270,13 +280,5 @@
   \setlist[itemize,1]{label=\textendash}% réglage des listes à la française
   \setlist[itemize,2]{label=\textperiodcentered}%
   }{}}
-  % Résout le problème de l'espace autour des guillemets français
-%   \appto\french@punctuation{%
-%       \XeTeXinterchartoks \french@punctguillstart \z@ = {\nobreak\thinspace}% "«a" -> "« a"
-%       \XeTeXinterchartoks \french@punctguillstart 4095 = {\xpg@unskip\thinspace\xpg@nospace{}}% "«  " -> "«~"
-%       \XeTeXinterchartoks 4095 \french@punctguillend = {\xpg@unskip\nobreak\thinspace}% "  »" -> "~»"
-%       \XeTeXinterchartoks 4095 \french@punctthin = {\xpg@unskip\nobreak\thinspace}%
-%       \XeTeXinterchartoks 4095 \french@punctthick = {\xpg@unskip\nobreak\thinspace}%  
-%   }{}{}
   \else\relax
   \fi
