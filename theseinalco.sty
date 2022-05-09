@@ -127,6 +127,8 @@
 \RequirePackage{graphicx}
 \RequirePackage{tabulary}
 \renewcommand{\coverpageleftmargin}{2cm}
+\renewcommand{\coverpagetopmargin}{2cm}
+\renewcommand{\coverpagebottommargin}{2cm}
 \AtBeginDocument{\renewcommand{\maketitle}{%
 \begin{titlepage}
 \setstretch{1}%
@@ -179,7 +181,7 @@
       \par\normalsize\@counite
       \fi
     \ifx\@preauthor\@empty\relax
-      \else\bigskip\par\normalsize\@preauthor\par
+      \else\par\bigskip\normalsize\@preauthor\par\medskip
       \fi
     \ifx\@author\@empty\relax
       \else\huge\@author\par\bigskip\bigskip
@@ -192,10 +194,10 @@
       \else\par\@grade\par
       \fi
     \ifx\@discipline\@empty\relax
-      \else\@discipline\par
+      \else\medskip\@discipline\par
       \fi
   \end{center}
-  \vfill\vfill\vfill
+  \vfill\vfill
   \begin{center}
     \ifx\@title\@empty\relax
       \else\Huge\@title
