@@ -37,6 +37,7 @@
 \raggedbottom% pas d'espace extensible entre les paragraphes
 
 \RequirePackage{scrhack}
+\RequirePackage{tocbasic}
 \KOMAoption{setspace}{true}
 \RequirePackage{setspace}
 
@@ -73,6 +74,9 @@
 ]{part,section,subsection,subsubsection,paragraph,subparagraph}
 \preto{\tableofcontents}{\setstretch{1}}
 \KOMAoptions{bibliography=totoc}% bibliographie dans la table des matières
+
+\DeclareTOCStyleEntry[linefill=\hspace{.5em}, raggedpagenumber]{tocline}{figure}
+\DeclareTOCStyleEntry[linefill=\hspace{.5em}, raggedpagenumber]{tocline}{table}
 
 %%% En-têtes et pieds de pages
 \addtokomafont{pagehead}{\small}
