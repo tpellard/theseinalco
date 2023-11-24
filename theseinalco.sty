@@ -72,7 +72,7 @@
   tocraggedpagenumber,%
   toclinefill=\hspace{.5em}%
 ]{part,section,subsection,subsubsection,paragraph,subparagraph}
-\preto{\tableofcontents}{\setstretch{1}}
+\AfterTOCHead{\singlespacing}
 \KOMAoptions{bibliography=totoc}% bibliographie dans la table des matières
 
 \DeclareTOCStyleEntry[linefill=\hspace{.5em}, raggedpagenumber]{tocline}{figure}
