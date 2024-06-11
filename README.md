@@ -1,12 +1,12 @@
 # README #
 
-`theseinalco.sty` version 0.6 2020-05-03
+`theseinalco.sty` version 1.0 2024-06-11
 
 ### À propos de ce dépôt ###
 
-Ce dépôt accueille le fichier style LaTeX pour les thèses en sciences humaines proposé dans le cadre de la formation LaTeX de l'[INALCO](http://www.inalco.fr/).
+Ce dépôt accueille le fichier style LaTeX pour les thèses en sciences humaines proposé dans le cadre de la formation LaTeX de l'[Inalco](http://www.inalco.fr/).
 
-Le style respecte les directives de l'école doctorale de l'[INALCO](http://www.inalco.fr/) concernant la présentation des thèses de doctorat, mais il est prévu pour pouvoir être adapté à des mémoires de master ou d'habilitation, et aux travaux réalisés dans d'autres institutions.
+Le style respecte les directives de l'école doctorale de l'[Inalco](http://www.inalco.fr/) concernant la présentation des thèses de doctorat, mais il est prévu pour pouvoir être adapté à des mémoires de master ou d'habilitation, et aux travaux réalisés dans d'autres institutions.
 
 La présentation est volontairement sobre et adopte des marges généreuses.
 
@@ -14,13 +14,12 @@ La présentation est volontairement sobre et adopte des marges généreuses.
 
 * de nombreux champs de métadonnées à remplir permettent de réaliser automatiquement une page de titre mentionnant toutes les informations requises (université, école doctorale, discipline, diplôme, titre, auteur, date, directeur, rapporteurs, jury…)
 * prise en charge du cas des thèses en cotutelle
-* résolution du problème des guillemets français pour les utilisateurs de l'extension polyglossia
 
 ### Prérequis ###
 
 * un système LaTeX récent
 * la classe `scrbook`
-* les extensions `datatool`, `enumitem`, `ifxetex`, `graphicx`, `scrhack`, `setspace`, `tabulary`
+* les extensions `graphicx`, `scrhack`, `setspace`, `tabularray`
 
 ### Fichiers ###
 
