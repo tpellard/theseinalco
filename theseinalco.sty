@@ -1,6 +1,6 @@
 %% theseinalco.sty
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{theseinalco}[2020-05-03 v. 0.6 style de thèse pour l'INALCO]
+\ProvidesPackage{theseinalco}[2024-06-11 v. 1 style de thèse pour l'Inalco]
 
 \@ifclassloaded{scrbook}%
   {%
@@ -57,11 +57,32 @@
     \nobreak\vspace{-\parskip}\vspace{-\baselineskip}\vspace{15pt}%
 }
 
-% Mise en forme des titres de divisions
+% Mise en forme des éléments
 \renewcommand*{\subsectionformat}{\upshape\thesubsection\autodot\enskip}
 \renewcommand*{\subsubsectionformat}{\upshape\thesubsubsection\autodot\enskip}
 \addtokomafont{disposition}{\rmfamily\setstretch{1}}
 \addtokomafont{subsection}{\itshape}
+\setkomafont{title}{\Huge}
+\setkomafont{subtitle}{\LARGE}
+\setkomafont{author}{\huge}
+\setkomafont{date}{\normalsize}
+
+\newkomafont{diplome}{\LARGE\scshape\MakeLowercase}
+\newkomafont{institution}{\Large\scshape\MakeLowercase}%
+\newkomafont{ecoledoctorale}{\large}
+\newkomafont{unite}{\normalsize}
+\newkomafont{coinstitution}{\large\scshape\MakeLowercase}%
+\newkomafont{coecoledoctorale}{\normalsize}
+\newkomafont{counite}{\normalsize}
+\newkomafont{preauthor}{\normalsize}
+\newkomafont{grade}{\normalsize}
+\newkomafont{discipline}{\normalsize}
+\newkomafont{dirtext}{\itshape}
+\newkomafont{rapptext}{\itshape}
+\newkomafont{jurytext}{\itshape}
+\newkomafont{authorv}{\large}
+\newkomafont{titlev}{\Large}
+\newkomafont{subtitlev}{\normalsize}
 
 %%% Tables des contenus
 \addtokomafont{partentry}{\rmfamily\normalsize}
@@ -86,10 +107,10 @@
 \setlist{nosep}
 \setlist[description]{font=\rmfamily}
 
-% %%%%%%%%%%%%%%% Nouveaux champs de métadonnées %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Nouveaux champs de métadonnées %%%%%%%%%%%%%%%
 \RequirePackage{datatool}% pour mettre en en forme la liste des membres du jury
-\newcommand{\universite}[1]{\def\@universite{#1}}\universite{}
-\newcommand{\couniversite}[1]{\def\@couniversite{#1}}\couniversite{}
+\newcommand{\institution}[1]{\def\@institution{#1}}\institution{}
+\newcommand{\coinstitution}[1]{\def\@coinstitution{#1}}\coinstitution{}
 \newcommand{\ecoledoctorale}[1]{\def\@ecoledoctorale{#1}}\ecoledoctorale{}
 \newcommand{\coecoledoctorale}[1]{\def\@coecoledoctorale{#1}}\coecoledoctorale{}
 \newcommand{\unite}[1]{\def\@unite{#1}}\unite{}
@@ -97,39 +118,39 @@
 \newcommand{\diplome}[1]{\def\@diplome{#1}}\diplome{}
 \newcommand{\grade}[1]{\def\@grade{#1}}\grade{}
 \newcommand{\discipline}[1]{\def\@discipline{#1}}\discipline{}
-\newcommand{\direction}[1]{\def\@direction{#1}}\direction{}
 \newcommand{\preauthor}[1]{\def\@preauthor{#1}}\preauthor{}
 \newcommand{\logo}[1]{\def\@logo{#1}}\logo{}
+\newcommand{\direction}[1]{\def\directiontext{#1}}\direction{}
+\newcommand{\jurytext}{Membres du jury:}
+\newcommand{\rapptext}{Rapporteurs:}
 
-\renewcommand{\dtlheaderformat}[1]{}
-\DTLnewdb{ldirection}
-\newcommand*{\directeur}[4]{%
-  \DTLnewrow{ldirection}%
-  \DTLnewdbentry{ldirection}{civilite}{#1}%
-  \DTLnewdbentry{ldirection}{prenom}{#2}%
-  \DTLnewdbentry{ldirection}{nom}{#3}%
-  \DTLnewdbentry{ldirection}{affiliation}{#4}%
-}
-\DTLnewdb{lrapporteur}
-\newcommand*{\rapporteur}[4]{%
-  \DTLnewrow{lrapporteur}%
-  \DTLnewdbentry{lrapporteur}{civilite}{#1}%
-  \DTLnewdbentry{lrapporteur}{prenom}{#2}%
-  \DTLnewdbentry{lrapporteur}{nom}{#3}%
-  \DTLnewdbentry{lrapporteur}{affiliation}{#4}%
-}
-\DTLnewdb{ljury}
-\newcommand*{\jury}[4]{%
-  \DTLnewrow{ljury}%
-  \DTLnewdbentry{ljury}{civilite}{#1}%
-  \DTLnewdbentry{ljury}{prenom}{#2}%
-  \DTLnewdbentry{ljury}{nom}{#3}%
-  \DTLnewdbentry{ljury}{affiliation}{#4}%
-}
+\ExplSyntaxOn
+\seq_new:N \g_dir_table_seq
+\NewDocumentCommand{\directeur}{mm}{ \seq_gput_right:Nn \g_dir_table_seq { {#1},{#2} } }
+\cs_new:Nn \_dir_table_make:n {\clist_use:nn { #1 } { & } \\}
+
+\seq_new:N \g_rapp_table_seq
+\NewDocumentCommand{\rapporteur}{mm}{ \seq_gput_right:Nn \g_rapp_table_seq { {#1},{#2} } }
+\cs_new:Nn \_rapp_table_make:n {\clist_use:nn { #1 } { & } \\}
+
+\seq_new:N \g_jury_table_seq
+\NewDocumentCommand{\jury}{mm}{ \seq_gput_right:Nn \g_jury_table_seq { {#1},{#2} } }
+\NewDocumentCommand{\jurytable}{}
+ {\noindent
+  \begin{tblr}[expand=\expanded]{colspec={X[-1,l]X[1,l]}, column{1} = {leftsep=0pt}, column{2} = {rightsep=0pt}}
+  \SetCell[c=2]{l} \usekomafont{dirtext}\directiontext & \\
+  \expanded{\seq_map_function:NN \g_dir_table_seq \_dir_table_make:n}
+  \SetRow{abovesep=\baselineskip}\SetCell[c=2]{l} \usekomafont{rapptext}\rapptext & \\
+  \expanded{\seq_map_function:NN \g_rapp_table_seq \_rapp_table_make:n}
+  \SetRow{abovesep=\baselineskip}\SetCell[c=2]{l} \usekomafont{jurytext}\jurytext & \\
+  \expanded{\seq_map_function:NN \g_jury_table_seq \_jury_table_make:n}
+  \end{tblr}
+ }
+\cs_new:Nn \_jury_table_make:n {\clist_use:nn { #1 } { & } \\}
+\ExplSyntaxOff
 
 %%% Page de titre
-\RequirePackage{graphicx}
-\RequirePackage{tabulary}
+\RequirePackage{tabularray}
 \renewcommand{\coverpageleftmargin}{2cm}
 \renewcommand{\coverpagetopmargin}{2cm}
 \renewcommand{\coverpagebottommargin}{2cm}
@@ -153,91 +174,68 @@
         \hsize=\columnwidth
         \linewidth=\hsize
   \begin{center}
-    \ifdefempty{\@logo}{\relax}{\@logo\par\bigskip\bigskip}
-    \if\@universite\@empty\relax
-      \else\resizebox{\linewidth}{!}{\scshape\MakeLowercase\@universite}
+    \ifdefempty{\@logo}{\relax}{\@logo\par\bigskip}
+    \if\@institution\@empty\relax
+      \else{\usekomafont{institution}\@institution\par}
       \fi
     \if\@ecoledoctorale\@empty\relax
-      \else \par\smallskip\@ecoledoctorale
+      \else \par\smallskip{\usekomafont{ecoledoctorale}\@ecoledoctorale\par}
       \fi
     \if\@unite\@empty\relax
-      \else\par\smallskip\@unite
+      \else\par\smallskip{\usekomafont{unite}\@unite\par}
       \fi
   \end{center}
   \vfill
   \begin{center}
     \ifx\@diplome\@empty\relax
       \else
-      \LARGE\textsc{\MakeLowercase\@diplome}
-      \par
+      {\usekomafont{diplome}\@diplome\par}
       \fi
-    \ifx\@couniversite\@empty\relax
+    \ifx\@coinstitution\@empty\relax
       \else
-      \bigskip\par\normalsize en co-tutelle avec\par
-      \Large{\scshape\MakeLowercase\@couniversite}
+      \bigskip\par
+      {\normalsize avec\par}
+      {\usekomafont{coinstitution}\@coinstitution\par}
       \fi
     \ifx\@coecoledoctorale\@empty\relax
       \else
-      \par\large\@coecoledoctorale
+      \usekomafont{coecoledoctorale}{\@coecoledoctorale\par}
       \fi
     \ifx\@counite\@empty\relax
       \else
-      \par\normalsize\@counite
+      \par{\usekomafont{counite}\@counite\par}
       \fi
     \ifx\@preauthor\@empty\relax
-      \else\par\bigskip\normalsize\@preauthor\par\medskip
+      \else\par\bigskip{\usekomafont{preauthor}\@preauthor}\par\medskip
       \fi
     \ifx\@author\@empty\relax
-      \else\huge\@author\par\bigskip\bigskip
+      \else{\usekomafont{author}\@author\par}\bigskip\bigskip
       \fi
     \normalsize
     \ifx\@date\@empty\relax
-      \else\par\@date\par
+      \else\par{\usekomafont{date}\@date\par}
       \fi
     \ifx\@grade\@empty\relax
-      \else\par\@grade\par
+      \else\par{\usekomafont{grade}\@grade\par}
       \fi
     \ifx\@discipline\@empty\relax
-      \else\medskip\@discipline\par
+      \else\medskip{\usekomafont{discipline}\@discipline\par}
       \fi
   \end{center}
-  \vfill\vfill
+  \vfill\vfill\vfill
   \begin{center}
     \ifx\@title\@empty\relax
-      \else\Huge\@title
+      \else\usekomafont{title}\@title
       \fi
     \ifx\@subtitle\@empty\relax
       \else
       \bigskip
-      \par\LARGE\@subtitle
+      \par\usekomafont{subtitle}\@subtitle
       \fi
   \end{center}
   \vfill\vfill\vfill\vfill\vfill
   \begin{flushleft}
-  \begin{tabulary}{\linewidth}{@{}lL@{}}
-    \DTLifdbempty{ldirection}{\relax}{
-      \multicolumn{1}{@{}l@{}}{\textit{\@direction}} \\[3pt]
-      \DTLforeach{ldirection}{%
-	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
-	\civi\ \prenom\ \nom & \affil \\
-	}\\
-      }
-    \DTLifdbempty{lrapporteur}{\\[-1em]}{
-      \multicolumn{1}{@{}l@{}}{\textit{Rapporteurs:}} \\[3pt]
-      \DTLforeach{lrapporteur}{%
-	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
-	\civi\ \prenom\ \nom & \affil \\
-	}\\
-      }
-    \DTLifdbempty{ljury}{\relax}{
-      \hline\\
-      \multicolumn{1}{@{}l@{}}{\textit{Membres du jury:}} \\[3pt]
-      \DTLforeach{ljury}{%
-	\civi=civilite,\prenom=prenom,\nom=nom,\affil=affiliation}{%
-	\civi\ \prenom\ \nom & \affil \\
-	}
-      }
-  \end{tabulary}
+  \jurytable
   \end{flushleft}
 \end{titlepage}
 \cleardoublepage\pagenumbering{arabic}
@@ -269,22 +267,11 @@
         \linewidth=\hsize
     \begin{center}
     \ifdefempty{\@logo}{\relax}{\@logo\par\bigskip\bigskip}
-    \if\@author\@empty\relax\else\par\large\@author\bigskip\fi
-    \if\@title\@empty\relax\else\par\Large\@title\medskip\fi
-    \if\@subtitle\@empty\relax\else\par\large\@subtitle\fi
+    \if\@author\@empty\relax\else{\usekomafont{authorv}\@author\par}\bigskip\fi
+    \if\@title\@empty\relax\else{\usekomafont{titlev}\@title\par}\medskip\fi
+    \if\@subtitle\@empty\relax\else{\usekomafont{subtitlev}\@subtitle\par}\fi
     \end{center}
     \bigskip\bigskip
 }{%
   \end{titlepage}%
 }
-
-%%% Pour le français
-\RequirePackage{ifxetex}
-\ifxetex
-  \AtEndPreamble{\ifthenelse{\equal{\xpg@main@language}{french}}{%
-  \RequirePackage{impnattypo}% charge l'extension des règles de l'Imprimerie nationale
-  \setlist[itemize,1]{label=\textendash}% réglage des listes à la française
-  \setlist[itemize,2]{label=\textperiodcentered}%
-  }{}}
-  \else\relax
-  \fi
