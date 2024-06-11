@@ -19,7 +19,7 @@ La présentation est volontairement sobre et adopte des marges généreuses.
 
 * un système LaTeX récent
 * la classe `scrbook`
-* les extensions `graphicx`, `scrhack`, `setspace`, `tabularray`
+* les extensions `scrhack`, `setspace`, `tabularray`, `tocbasic`
 
 ### Fichiers ###
 
