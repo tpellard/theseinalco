@@ -25,7 +25,7 @@ La présentation est volontairement sobre et adopte des marges généreuses.
 
 * `theseinalco.sty`: le fichier style
 * `modele.tex`: un exemple d'utilisation avec XeLaTeX et la police libre [Linux Libertine](http://www.linuxlibertine.org/)
-* `inalco-logo-color.pdf`: le fichier image du logo de l'[INALCO](http://www.inalco.fr/)
+* `inalco-logo-color.pdf`: le fichier image du logo de l'[Inalco](http://www.inalco.fr/)
 * `modele.pdf`: le résultat de l'exemple d'utilisation
 
 ### Mode d'emploi ###
